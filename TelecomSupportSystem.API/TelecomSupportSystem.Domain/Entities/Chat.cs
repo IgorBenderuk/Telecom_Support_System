@@ -7,6 +7,6 @@
         public int TicketId { get; set; }
         public Ticket Ticket { get; set; }
 
-        public ICollection<Message> Messages { get; set; }
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
 }

@@ -10,9 +10,9 @@ namespace TelecomSupportSystem.Domain.Entities
         public MessageSenderType SenderType { get; set; }
 
         public int ChatId { get; set; }
-        public Chat Chat { get; set; }
+        public virtual Chat Chat { get; set; }
 
         public string? SenderId { get; set; }
-        public AppUser? Sender { get; set; }
+        public virtual AppUser? Sender { get; set; }
     }
 }
