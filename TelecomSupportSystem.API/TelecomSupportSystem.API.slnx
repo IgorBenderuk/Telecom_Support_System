@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="TelecomSupportSystem.API/TelecomSupportSystem.API.csproj" />
+  <Project Path="TelecomSupportSystem.Application/TelecomSupportSystem.Application.csproj" Id="dd8bbb9f-f225-4de4-99e6-bf7924ded58d" />
+  <Project Path="TelecomSupportSystem.Domain/TelecomSupportSystem.Domain.csproj" Id="696b69fe-1055-4eed-bf7f-8a58e4c07782" />
+  <Project Path="TelecomSupportSystem.Infrastructure/TelecomSupportSystem.Infrastructure.csproj" Id="6852f42a-73b0-4ffe-9e97-eda18903c45c" />
+</Solution>
