@@ -2,8 +2,9 @@
 {
     public enum MessageSenderType
     {
-        Customer,
-        Agent,
-        AI
+        Unknown = 0,
+        Customer = 1,
+        Agent = 2,
+        AI = 3
     }
 }
