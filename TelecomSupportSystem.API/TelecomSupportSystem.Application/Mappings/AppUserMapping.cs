@@ -7,14 +7,7 @@ namespace TelecomSupportSystem.Application.Mappings
     {
         public static AppUser ToAppUser(this RegisterRequest registerRequest)
         {
-            return new AppUser()
-            {
-                Email = registerRequest.Email,
-                FirstName = registerRequest.FirstName,
-                LastName = registerRequest.LastName,
-                UserName = registerRequest.Email
-            };
+            return AppUser.CreateCustomer(registerRequest.FirstName, registerRequest.LastName, registerRequest.Email);
         }
     }
-
 }

@@ -25,7 +25,7 @@ namespace TelecomSupportSystem.Application.Services
                 return Result.Failure(string.Join(',', createResult.Errors.Select(err => err.Description)));
             }
 
-            var addRoleResult = await _userManager.AddToRoleAsync(user, "Customer");
+            var addRoleResult = await _userManager.AddToRoleAsync(user, Roles.Customer);
 
             if ( !addRoleResult.Succeeded )
             {
