@@ -52,8 +52,7 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                 {
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false),
-                    TotalTicketsResolved = table.Column<int>(type: "int", nullable: false),
-                    LastActiveAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    TotalTicketsResolved = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -212,26 +211,6 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chats",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TicketId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Chats", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Chats_Tickets_TicketId",
-                        column: x => x.TicketId,
-                        principalTable: "Tickets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
@@ -240,7 +219,7 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                     Content = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
                     SentAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SenderType = table.Column<int>(type: "int", nullable: false),
-                    ChatId = table.Column<int>(type: "int", nullable: false),
+                    TicketId = table.Column<int>(type: "int", nullable: false),
                     SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -253,9 +232,9 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Messages_Chats_ChatId",
-                        column: x => x.ChatId,
-                        principalTable: "Chats",
+                        name: "FK_Messages_Tickets_TicketId",
+                        column: x => x.TicketId,
+                        principalTable: "Tickets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -305,21 +284,15 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chats_TicketId",
-                table: "Chats",
-                column: "TicketId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_ChatId_SentAt",
-                table: "Messages",
-                columns: new[] { "ChatId", "SentAt" },
-                descending: new[] { false, true });
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Messages_SenderId",
                 table: "Messages",
                 column: "SenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_TicketId_SentAt",
+                table: "Messages",
+                columns: new[] { "TicketId", "SentAt" },
+                descending: new[] { false, true });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_AgentId",
@@ -367,9 +340,6 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Chats");
 
             migrationBuilder.DropTable(
                 name: "Tickets");
