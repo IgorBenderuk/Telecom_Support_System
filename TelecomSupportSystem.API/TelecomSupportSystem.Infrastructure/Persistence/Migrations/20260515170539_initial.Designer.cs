@@ -12,7 +12,7 @@ using TelecomSupportSystem.Infrastructure.Persistence;
 namespace TelecomSupportSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260405144518_initial")]
+    [Migration("20260515170539_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -244,28 +244,6 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("TelecomSupportSystem.Domain.Entities.Chat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TicketId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TicketId")
-                        .IsUnique();
-
-                    b.ToTable("Chats");
-                });
-
             modelBuilder.Entity("TelecomSupportSystem.Domain.Entities.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -273,9 +251,6 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ChatId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -291,11 +266,14 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("TicketId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SenderId");
 
-                    b.HasIndex("ChatId", "SentAt")
+                    b.HasIndex("TicketId", "SentAt")
                         .IsDescending(false, true);
 
                     b.ToTable("Messages");
@@ -308,9 +286,6 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastActiveAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("TotalTicketsResolved")
                         .HasColumnType("int");
@@ -422,33 +397,22 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                     b.Navigation("AgentProfile");
                 });
 
-            modelBuilder.Entity("TelecomSupportSystem.Domain.Entities.Chat", b =>
-                {
-                    b.HasOne("TelecomSupportSystem.Domain.Entities.Ticket", "Ticket")
-                        .WithOne("Chat")
-                        .HasForeignKey("TelecomSupportSystem.Domain.Entities.Chat", "TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ticket");
-                });
-
             modelBuilder.Entity("TelecomSupportSystem.Domain.Entities.Message", b =>
                 {
-                    b.HasOne("TelecomSupportSystem.Domain.Entities.Chat", "Chat")
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TelecomSupportSystem.Domain.Entities.AppUser", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("Chat");
+                    b.HasOne("TelecomSupportSystem.Domain.Entities.Ticket", "Ticket")
+                        .WithMany("Messages")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Sender");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("TelecomSupportSystem.Domain.Entities.SupportAgentProfile", b =>
@@ -487,15 +451,9 @@ namespace TelecomSupportSystem.Infrastructure.Migrations
                     b.Navigation("CreatedTickets");
                 });
 
-            modelBuilder.Entity("TelecomSupportSystem.Domain.Entities.Chat", b =>
-                {
-                    b.Navigation("Messages");
-                });
-
             modelBuilder.Entity("TelecomSupportSystem.Domain.Entities.Ticket", b =>
                 {
-                    b.Navigation("Chat")
-                        .IsRequired();
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

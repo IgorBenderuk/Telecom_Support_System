@@ -21,7 +21,7 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Seeders
             var roleManager = scope.ServiceProvider
                 .GetRequiredService<RoleManager<IdentityRole>>();
 
-            foreach ( var role in new[] { Roles.Agent, Roles.Customer } )
+            foreach ( var role in new[] { Roles.Agent, Roles.Customer, Roles.Admin } )
             {
                 if ( !await roleManager.RoleExistsAsync(role) )
                 {

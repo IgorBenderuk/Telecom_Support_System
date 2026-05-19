@@ -11,7 +11,6 @@ namespace TelecomSupportSystem.Infrastructure.Persistence
         }
 
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<SupportAgentProfile> AgentProfiles { get; set; }
 

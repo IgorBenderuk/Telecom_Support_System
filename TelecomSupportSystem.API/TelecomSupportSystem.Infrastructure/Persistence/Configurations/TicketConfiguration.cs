@@ -10,10 +10,9 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
         {
             builder.Property(t => t.Description).HasMaxLength(500);
 
-            builder.HasOne(t => t.Chat)
-                .WithOne(t => t.Ticket)
-                .HasForeignKey<Chat>(c => c.TicketId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(t => t.Messages)
+                .WithOne(m => m.Ticket)
+                .HasForeignKey(m => m.TicketId);
         }
     }
 }
