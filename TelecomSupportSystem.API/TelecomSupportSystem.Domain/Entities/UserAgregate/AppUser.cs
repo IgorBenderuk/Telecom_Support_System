@@ -40,10 +40,9 @@ namespace TelecomSupportSystem.Domain.Entities.UserAgregate
         }
 
         public static AppUser CreateAgent(string firstName, string lastName, string email)
+        public static AppUser CreateAdmin(string firstName, string lastName, string email)
         {
-            var user = CreateBase(firstName, lastName, email);
-            user.AgentProfile = SupportAgent.Create(user);
-            return user;
+            return CreateBase(firstName, lastName, email);
         }
     }
 }
