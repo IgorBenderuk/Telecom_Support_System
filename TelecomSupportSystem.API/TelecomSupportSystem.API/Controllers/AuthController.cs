@@ -17,9 +17,9 @@ namespace TelecomSupportSystem.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterCustomer(RegisterRequest registerRequest)
+        public async Task<IActionResult> RegisterCustomer(RegisterCustomerRequest registerRequest)
         {
-            var result = await _authService.RegisterCustomerUser(registerRequest);
+            var result = await _authService.RegisterCustomer(registerRequest);
 
             if ( !result.IsSuccess )
             {
