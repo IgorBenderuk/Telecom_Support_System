@@ -2,7 +2,8 @@
 
 namespace TelecomSupportSystem.Application.DTOs
 {
-    public class RegisterRequest
+
+    public class RegisterCustomerRequest
     {
         [Required]
         [EmailAddress]
