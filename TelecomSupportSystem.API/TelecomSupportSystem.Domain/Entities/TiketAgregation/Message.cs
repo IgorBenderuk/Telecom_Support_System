@@ -1,7 +1,7 @@
-﻿using TelecomSupportSystem.Domain.Enums;
-using TelecomSupportSystem.Domain.Exeptions;
+﻿using TelecomSupportSystem.Domain.Common.Exeptions;
+using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
-namespace TelecomSupportSystem.Domain.Entities
+namespace TelecomSupportSystem.Domain.Entities.TiketAgregation
 {
     public class Message
     {
@@ -17,7 +17,7 @@ namespace TelecomSupportSystem.Domain.Entities
         public AppUser? Sender { get; private set; }
 
         private Message() { }
-        public static Message Create(string content, string? senderId, MessageSenderType senderType)
+        internal static Message Create(string content, string? senderId, MessageSenderType senderType)
         {
             if ( string.IsNullOrEmpty(content) )
                 throw new DomainException("content message cannot be null or empty");

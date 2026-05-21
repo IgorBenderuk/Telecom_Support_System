@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TelecomSupportSystem.Domain.Entities;
+using TelecomSupportSystem.Domain.Common.Constants;
 
 namespace TelecomSupportSystem.Infrastructure.Persistence.Seeders
 {

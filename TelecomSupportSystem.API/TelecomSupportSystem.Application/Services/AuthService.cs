@@ -3,7 +3,7 @@ using TelecomSupportSystem.Application.DTOs;
 using TelecomSupportSystem.Application.Interfaces;
 using TelecomSupportSystem.Application.Mappings;
 using TelecomSupportSystem.Domain.Common;
-using TelecomSupportSystem.Domain.Entities;
+using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
 namespace TelecomSupportSystem.Application.Services
 {

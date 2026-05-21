@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TelecomSupportSystem.Domain.Entities;
+using TelecomSupportSystem.Domain.Entities.TiketAgregation;
+using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
 namespace TelecomSupportSystem.Infrastructure.Persistence
 {
@@ -12,7 +13,7 @@ namespace TelecomSupportSystem.Infrastructure.Persistence
 
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<SupportAgentProfile> AgentProfiles { get; set; }
+        public DbSet<SupportAgent> AgentProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
