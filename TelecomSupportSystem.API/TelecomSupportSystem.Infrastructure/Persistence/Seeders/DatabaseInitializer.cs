@@ -34,7 +34,7 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Seeders
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
             if ( !await userManager.Users.AnyAsync() )
             {
-                var admin = AppUser.CreateAdmin("Admin", "Admin", "admin@telecom.com");
+                var admin = AppUser.Create("Admin", "Admin", "admin@telecom.com");
                 await userManager.CreateAsync(admin, "Admin123!");
                 await userManager.AddToRoleAsync(admin, Roles.Admin);
             }

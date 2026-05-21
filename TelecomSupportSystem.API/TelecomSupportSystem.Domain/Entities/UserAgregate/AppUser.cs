@@ -15,7 +15,7 @@ namespace TelecomSupportSystem.Domain.Entities.UserAgregate
         public ICollection<Ticket> CreatedTickets { get; private set; } = [];
         public ICollection<Ticket> AssignedTickets { get; private set; } = [];
 
-        private static AppUser CreateBase(string firstName, string lastName, string email)
+        public static AppUser Create(string firstName, string lastName, string email)
         {
             if ( string.IsNullOrWhiteSpace(firstName) )
                 throw new DomainException("First name is required.");
@@ -34,15 +34,12 @@ namespace TelecomSupportSystem.Domain.Entities.UserAgregate
             };
         }
 
-        public static AppUser CreateCustomer(string firstName, string lastName, string email)
+        public void InitializeAgentProfile()
         {
-            return CreateBase(firstName, lastName, email);
-        }
+            if ( AgentProfile != null )
+                throw new DomainException("Agent profile already exists.");
 
-        public static AppUser CreateAgent(string firstName, string lastName, string email)
-        public static AppUser CreateAdmin(string firstName, string lastName, string email)
-        {
-            return CreateBase(firstName, lastName, email);
+            AgentProfile = SupportAgent.Create(this);
         }
     }
 }

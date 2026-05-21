@@ -14,7 +14,7 @@
             return new SupportAgent
             {
                 AppUser = user,
-                IsAvailable = true,
+                IsAvailable = false,
                 TotalTicketsResolved = 0
             };
         }
