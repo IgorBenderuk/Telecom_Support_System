@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using TelecomSupportSystem.Domain.Entities;
+using TelecomSupportSystem.Domain.Entities.UserAgregate;
 using TelecomSupportSystem.Infrastructure.Persistence;
 
 namespace TelecomSupportSystem.Infrastructure.Extensions

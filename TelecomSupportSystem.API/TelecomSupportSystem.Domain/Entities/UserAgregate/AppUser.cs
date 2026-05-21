@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using TelecomSupportSystem.Domain.Exeptions;
+using TelecomSupportSystem.Domain.Common.Exeptions;
+using TelecomSupportSystem.Domain.Entities.TiketAgregation;
 
-namespace TelecomSupportSystem.Domain.Entities
+namespace TelecomSupportSystem.Domain.Entities.UserAgregate
 {
     public class AppUser : IdentityUser
     {
@@ -10,7 +11,7 @@ namespace TelecomSupportSystem.Domain.Entities
         public DateTime CreatedAt { get; private set; }
         public DateTime? LastActiveAt { get; private set; }
 
-        public SupportAgentProfile? AgentProfile { get; private set; }
+        public SupportAgent? AgentProfile { get; private set; }
         public ICollection<Ticket> CreatedTickets { get; private set; } = [];
         public ICollection<Ticket> AssignedTickets { get; private set; } = [];
 
@@ -41,15 +42,8 @@ namespace TelecomSupportSystem.Domain.Entities
         public static AppUser CreateAgent(string firstName, string lastName, string email)
         {
             var user = CreateBase(firstName, lastName, email);
-            user.AgentProfile = SupportAgentProfile.Create(user);
+            user.AgentProfile = SupportAgent.Create(user);
             return user;
         }
-    }
-
-    public static class Roles
-    {
-        public const string Agent = "Agent";
-        public const string Customer = "Customer";
-        public const string Admin = "Admin";
     }
 }

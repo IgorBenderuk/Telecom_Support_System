@@ -1,11 +1,11 @@
-﻿namespace TelecomSupportSystem.Domain.Enums
+﻿namespace TelecomSupportSystem.Domain.Entities.TiketAgregation.Enums
 {
     public enum TicketStatus
     {
         Open,
         AiHandling,
         WaitingAgent,
-        InProgress,
+        OnAgentModeration,
         Resolved,
         Closed
     }

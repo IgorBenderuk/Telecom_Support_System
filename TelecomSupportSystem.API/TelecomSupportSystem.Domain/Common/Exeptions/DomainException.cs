@@ -1,4 +1,4 @@
-﻿namespace TelecomSupportSystem.Domain.Exeptions
+﻿namespace TelecomSupportSystem.Domain.Common.Exeptions
 {
     public class DomainException : Exception
     {

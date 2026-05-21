@@ -1,5 +1,5 @@
 ﻿using TelecomSupportSystem.Application.DTOs;
-using TelecomSupportSystem.Domain.Entities;
+using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
 namespace TelecomSupportSystem.Application.Mappings
 {

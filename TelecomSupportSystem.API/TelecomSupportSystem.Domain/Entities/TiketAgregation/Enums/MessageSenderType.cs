@@ -1,4 +1,4 @@
-﻿namespace TelecomSupportSystem.Domain.Enums
+﻿namespace TelecomSupportSystem.Domain.Entities.TiketAgregation
 {
     public enum MessageSenderType
     {

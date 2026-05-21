@@ -1,19 +1,18 @@
-﻿namespace TelecomSupportSystem.Domain.Entities
+﻿namespace TelecomSupportSystem.Domain.Entities.UserAgregate
 {
-    public class SupportAgentProfile
+    public class SupportAgent
     {
         public string AppUserId { get; private set; }
         public AppUser AppUser { get; private set; }
         public bool IsAvailable { get; private set; }
         public int TotalTicketsResolved { get; private set; }
 
-        private SupportAgentProfile() { }
+        private SupportAgent() { }
 
-        internal static SupportAgentProfile Create(AppUser user)
+        internal static SupportAgent Create(AppUser user)
         {
-            return new SupportAgentProfile
+            return new SupportAgent
             {
-                AppUserId = user.Id,
                 AppUser = user,
                 IsAvailable = true,
                 TotalTicketsResolved = 0
