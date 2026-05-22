@@ -3,26 +3,28 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using TelecomSupportSystem.Application.Interfaces.Services;
 using TelecomSupportSystem.Domain.Entities.UserAgregate;
 using TelecomSupportSystem.Infrastructure.Options;
 
 namespace TelecomSupportSystem.Infrastructure.Services
 {
-    public class JwtService
+    public class JwtService(IOptions<JwtOptions> options) : ITokenService
     {
-        private readonly JwtOptions _jwtOptions;
-        public JwtService(IOptions<JwtOptions> options)
-        {
-            _jwtOptions = options.Value;
-        }
+        private readonly JwtOptions _jwtOptions = options.Value;
 
-        public string GenerateToken(AppUser user)
+        public string GenerateToken(AppUser user, string[] roles)
         {
             var claims = new List<Claim>
-        {
-            new(ClaimTypes.NameIdentifier, user.Id),
-            new(ClaimTypes.Email, user.Email!),
-        };
+            {
+                new(ClaimTypes.NameIdentifier, user.Id),
+                new(ClaimTypes.Email, user.Email!),
+            };
+
+            foreach ( var role in roles )
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
