@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using TelecomSupportSystem.Application.DTOs;
-using TelecomSupportSystem.Application.Interfaces;
+using TelecomSupportSystem.Application.Interfaces.Services;
 using TelecomSupportSystem.Application.Mappings;
 using TelecomSupportSystem.Domain.Common;
 using TelecomSupportSystem.Domain.Common.Constants;
@@ -8,9 +8,10 @@ using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
 namespace TelecomSupportSystem.Application.Services
 {
-    public class AuthService(UserManager<AppUser> userManager) : IAuthService
+    public class AuthService(UserManager<AppUser> userManager, ITokenService tokenService) : IAuthService
     {
         private readonly UserManager<AppUser> _userManager = userManager;
+        private readonly ITokenService _tokenService = tokenService;
 
         public async Task<Result> RegisterCustomer(RegisterCustomerRequest registerCustomerRequest)
         {
@@ -55,6 +56,27 @@ namespace TelecomSupportSystem.Application.Services
                 return Result.Failure(string.Join(',', addRoleResult.Errors.Select(err => err.Description)));
             }
             return Result.Success();
+        }
+
+        public async Task<Result<LoginResponse>> LoginAsync(LoginRequest loginRequest)
+        {
+            var user = await _userManager.FindByEmailAsync(loginRequest.Email);
+
+            if ( user is null )
+                return Result<LoginResponse>.Failure($"User with email{loginRequest.Email} was not found.");
+
+            if ( !await _userManager.CheckPasswordAsync(user, loginRequest.Password) )
+                return Result<LoginResponse>.Failure($"Specified password is not valid.");
+
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if ( !roles.Any() )
+                throw new InvalidOperationException($"User {user.Id} has no roles assigned.");
+
+            var token = _tokenService.GenerateToken(user, [.. roles]);
+
+            return Result<LoginResponse>.Success(new LoginResponse(token));
         }
     }
 }

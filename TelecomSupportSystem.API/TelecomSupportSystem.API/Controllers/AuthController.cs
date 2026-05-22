@@ -1,31 +1,38 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using TelecomSupportSystem.Application.DTOs;
-using TelecomSupportSystem.Application.Interfaces;
+using TelecomSupportSystem.Application.Interfaces.Services;
 
 namespace TelecomSupportSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController(IAuthService authService) : ControllerBase
     {
-        private readonly IAuthService _authService;
-
-        public AuthController(IAuthService authService)
-        {
-            _authService = authService;
-        }
+        private readonly IAuthService _authService = authService;
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterCustomer(RegisterCustomerRequest registerRequest)
         {
-            var registerCustomerResult = await _authService.RegisterCustomer(registerRequest);
+            var registerResult = await _authService.RegisterCustomer(registerRequest);
 
-            if ( !registerCustomerResult.IsSuccess )
+            if ( !registerResult.IsSuccess )
             {
-                return BadRequest(registerCustomerResult.Error);
+                return BadRequest(registerResult.Error);
             }
-            return Ok(registerCustomerResult.IsSuccess);
+            return Ok(registerResult.IsSuccess);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LogIn(LoginRequest loginRequest)
+        {
+            var loginResult = await _authService.LoginAsync(loginRequest);
+
+            if ( !loginResult.IsSuccess )
+            {
+                return BadRequest(loginResult.Error);
+            }
+            return Ok(loginResult.Value);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TelecomSupportSystem.Application.DTOs;
-using TelecomSupportSystem.Application.Interfaces;
+using TelecomSupportSystem.Application.Interfaces.Services;
 using TelecomSupportSystem.Domain.Common.Constants;
 
 namespace TelecomSupportSystem.API.Controllers
