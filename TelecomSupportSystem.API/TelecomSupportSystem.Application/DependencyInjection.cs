@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TelecomSupportSystem.Application.Interfaces;
+using TelecomSupportSystem.Application.Interfaces.Services;
 using TelecomSupportSystem.Application.Services;
 
 namespace TelecomSupportSystem.Application

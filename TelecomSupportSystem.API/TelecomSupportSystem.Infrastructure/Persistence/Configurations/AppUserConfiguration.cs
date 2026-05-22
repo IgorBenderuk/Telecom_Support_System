@@ -12,6 +12,9 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(50);
 
+            builder.HasIndex(p => p.NormalizedEmail)
+                .IsUnique();
+
             builder.Property(p => p.LastName).IsRequired().HasMaxLength(50);
 
             builder.HasOne(u => u.AgentProfile)
