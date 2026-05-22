@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TelecomSupportSystem.Domain.Entities;
-using TelecomSupportSystem.Infrastructure.Persistence;
+using TelecomSupportSystem.Infrastructure.Extensions;
 
 namespace TelecomSupportSystem.Infrastructure
 {
@@ -11,12 +10,11 @@ namespace TelecomSupportSystem.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>(options
-                => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.ConfigureInfrastructureOptions(configuration);
 
-            services.AddIdentityCore<AppUser>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
+            services.AddDatabase(configuration);
+            services.AddIdentity();
+            services.AddJwtAuthentication(configuration);
 
             return services;
         }

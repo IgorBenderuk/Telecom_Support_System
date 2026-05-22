@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TelecomSupportSystem.Domain.Entities;
+using TelecomSupportSystem.Domain.Entities.TiketAgregation;
 
 namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
 {
@@ -18,7 +18,7 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
             builder.Property(m => m.SenderType)
                 .IsRequired();
 
-            builder.HasIndex(m => new { m.ChatId, m.SentAt })
+            builder.HasIndex(m => new { m.TicketId, m.SentAt })
                 .IsDescending(false, true);
 
             builder.HasOne(m => m.Sender)

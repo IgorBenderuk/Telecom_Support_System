@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TelecomSupportSystem.Domain.Entities;
+using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
 namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
 {
@@ -16,7 +16,7 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
 
             builder.HasOne(u => u.AgentProfile)
                 .WithOne(a => a.AppUser)
-                .HasForeignKey<SupportAgentProfile>(a => a.AppUserId);
+                .HasForeignKey<SupportAgent>(a => a.AppUserId);
 
             builder.HasMany(u => u.CreatedTickets)
                 .WithOne(t => t.Customer)
