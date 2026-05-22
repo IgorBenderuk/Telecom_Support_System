@@ -58,15 +58,15 @@ namespace TelecomSupportSystem.Application.Services
             return Result.Success();
         }
 
-        public async Task<Result<LoginResponse>> LoginAsync(LoginRequest loginRequest)
+        public async Task<Result<string>> LoginAsync(LoginRequest loginRequest)
         {
             var user = await _userManager.FindByEmailAsync(loginRequest.Email);
 
             if ( user is null )
-                return Result<LoginResponse>.Failure($"User with email{loginRequest.Email} was not found.");
+                return Result<string>.Failure($"User with email{loginRequest.Email} was not found.");
 
             if ( !await _userManager.CheckPasswordAsync(user, loginRequest.Password) )
-                return Result<LoginResponse>.Failure($"Specified password is not valid.");
+                return Result<string>.Failure($"Specified password is not valid.");
 
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -76,7 +76,7 @@ namespace TelecomSupportSystem.Application.Services
 
             var token = _tokenService.GenerateToken(user, [.. roles]);
 
-            return Result<LoginResponse>.Success(new LoginResponse(token));
+            return Result<string>.Success(token);
         }
     }
 }

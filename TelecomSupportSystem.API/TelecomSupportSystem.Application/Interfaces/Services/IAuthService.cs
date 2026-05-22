@@ -9,6 +9,6 @@ namespace TelecomSupportSystem.Application.Interfaces.Services
 
         public Task<Result> RegisterAgent(RegisterAgentRequest registerAgentRequest);
 
-        public Task<Result<LoginResponse>> LoginAsync(LoginRequest loginRequest);
+        public Task<Result<string>> LoginAsync(LoginRequest loginRequest);
     }
 }
