@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TelecomSupportSystem.Application.Interfaces.Services;
+using TelecomSupportSystem.Domain.Interfaces;
 using TelecomSupportSystem.Infrastructure.Extensions;
+using TelecomSupportSystem.Infrastructure.Persistence;
 using TelecomSupportSystem.Infrastructure.Services;
 
 namespace TelecomSupportSystem.Infrastructure
@@ -14,6 +16,7 @@ namespace TelecomSupportSystem.Infrastructure
         {
             services.ConfigureInfrastructureOptions(configuration);
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, JwtService>();
 
             services.AddDatabase(configuration);
