@@ -20,7 +20,7 @@ namespace TelecomSupportSystem.Domain.Entities.TiketAgregate
         public AppUser Customer { get; private set; }
 
         public string? AgentId { get; private set; }
-        public AppUser? Agent { get; private set; }
+        public SupportAgent? Agent { get; private set; }
 
         private readonly List<Message> _messages = [];
         public IReadOnlyCollection<Message> Messages => _messages.AsReadOnly();

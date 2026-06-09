@@ -13,7 +13,7 @@ namespace TelecomSupportSystem.Domain.Entities.UserAgregate
 
         public SupportAgent? AgentProfile { get; private set; }
         public ICollection<Ticket> CreatedTickets { get; private set; } = [];
-        public ICollection<Ticket> AssignedTickets { get; private set; } = [];
+
 
         public static AppUser Create(string firstName, string lastName, string email)
         {
