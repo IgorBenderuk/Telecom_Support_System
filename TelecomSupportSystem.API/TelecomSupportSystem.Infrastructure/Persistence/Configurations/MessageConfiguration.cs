@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TelecomSupportSystem.Domain.Entities.TiketAgregation;
+using TelecomSupportSystem.Domain.Entities.TiketAgregate;
 
 namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
 {
@@ -8,6 +8,8 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Message> builder)
         {
+            builder.ToTable("Messages");
+
             builder.Property(m => m.Content)
                 .IsRequired()
                 .HasMaxLength(1500);

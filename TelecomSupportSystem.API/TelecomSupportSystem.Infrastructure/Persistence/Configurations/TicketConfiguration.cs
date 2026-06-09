@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TelecomSupportSystem.Domain.Entities.TiketAgregation;
+using TelecomSupportSystem.Domain.Entities.TiketAgregate;
 
 namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
 {

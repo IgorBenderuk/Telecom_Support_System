@@ -1,4 +1,4 @@
-﻿namespace TelecomSupportSystem.Domain.Entities.TiketAgregation.Enums
+﻿namespace TelecomSupportSystem.Domain.Entities.TiketAgregate.Enums
 {
     public enum TicketStatus
     {
