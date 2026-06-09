@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TelecomSupportSystem.Domain.Entities.TiketAgregation;
+using TelecomSupportSystem.Domain.Entities.TiketAgregate;
 using TelecomSupportSystem.Domain.Interfaces.Repositories;
 
 namespace TelecomSupportSystem.Infrastructure.Persistence.Repositories

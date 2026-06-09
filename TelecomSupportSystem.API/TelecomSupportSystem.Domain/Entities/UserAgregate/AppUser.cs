@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using TelecomSupportSystem.Domain.Common.Exeptions;
-using TelecomSupportSystem.Domain.Entities.TiketAgregation;
+using TelecomSupportSystem.Domain.Entities.TiketAgregate;
 
 namespace TelecomSupportSystem.Domain.Entities.UserAgregate
 {

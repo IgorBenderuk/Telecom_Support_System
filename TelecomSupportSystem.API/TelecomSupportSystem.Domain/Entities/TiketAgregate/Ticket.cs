@@ -1,8 +1,8 @@
 ﻿using TelecomSupportSystem.Domain.Common.Exeptions;
-using TelecomSupportSystem.Domain.Entities.TiketAgregation.Enums;
+using TelecomSupportSystem.Domain.Entities.TiketAgregate.Enums;
 using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
-namespace TelecomSupportSystem.Domain.Entities.TiketAgregation
+namespace TelecomSupportSystem.Domain.Entities.TiketAgregate
 {
     public class Ticket
     {

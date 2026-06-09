@@ -1,4 +1,4 @@
-﻿using TelecomSupportSystem.Domain.Entities.TiketAgregation;
+﻿using TelecomSupportSystem.Domain.Entities.TiketAgregate;
 
 namespace TelecomSupportSystem.Domain.Interfaces.Repositories
 {
