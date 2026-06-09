@@ -12,7 +12,6 @@ namespace TelecomSupportSystem.Infrastructure.Persistence
         }
 
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Message> Messages { get; set; }
         public DbSet<SupportAgent> AgentProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

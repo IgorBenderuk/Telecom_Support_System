@@ -8,6 +8,8 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Message> builder)
         {
+            builder.ToTable("Messages");
+
             builder.Property(m => m.Content)
                 .IsRequired()
                 .HasMaxLength(1500);
