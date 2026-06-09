@@ -8,7 +8,7 @@ namespace TelecomSupportSystem.Infrastructure.Persistence
     {
         private ITicketRepository _ticketRepository;
 
-        public ITicketRepository Tickets => _ticketRepository ?? new TicketRepository(appDbContext);
+        public ITicketRepository Tickets => _ticketRepository ??= new TicketRepository(appDbContext);
         public Task SaveChangesAsync()
         {
             return appDbContext.SaveChangesAsync();
