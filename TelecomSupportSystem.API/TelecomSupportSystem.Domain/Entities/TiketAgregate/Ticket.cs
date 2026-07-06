@@ -1,4 +1,5 @@
-﻿using TelecomSupportSystem.Domain.Common.Exeptions;
+﻿using TelecomSupportSystem.Domain.Common.Constants;
+using TelecomSupportSystem.Domain.Common.Exeptions;
 using TelecomSupportSystem.Domain.Entities.TiketAgregate.Enums;
 using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
@@ -36,6 +37,7 @@ namespace TelecomSupportSystem.Domain.Entities.TiketAgregate
 
             var ticket = new Ticket() { CustomerId = senderId };
             ticket.AddMessage(initialProblemDetails, MessageSenderType.Customer, senderId);
+            ticket.LastChatActivity = DateTime.UtcNow;
             ticket.Status = TicketStatus.Open;
             ticket.CreatedAt = DateTime.UtcNow;
             return ticket;
@@ -71,11 +73,19 @@ namespace TelecomSupportSystem.Domain.Entities.TiketAgregate
             Status = TicketStatus.OnAgentModeration;
         }
 
+        public bool IsAccessibleBy(string userId, string role)
+        {
+            return role switch
+            {
+                Roles.Admin => true,
+                Roles.Agent => AgentId == userId,
+                Roles.Customer => CustomerId == userId,
+                _ => false
+            };
+        }
+
         public void Close()
         {
-            if ( AgentId is null )
-                throw new DomainException("Cannot close ticket without assigned agent");
-
             if ( Status == TicketStatus.Closed )
                 throw new DomainException("Ticket is already closed");
 

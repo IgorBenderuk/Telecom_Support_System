@@ -9,6 +9,7 @@ namespace TelecomSupportSystem.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITicketService, TicketService>();
             return services;
         }
     }
