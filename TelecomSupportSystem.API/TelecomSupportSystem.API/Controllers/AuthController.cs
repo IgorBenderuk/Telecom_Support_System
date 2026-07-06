@@ -1,6 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
-using TelecomSupportSystem.Application.DTOs;
+using TelecomSupportSystem.Application.DTOs.Auth;
 using TelecomSupportSystem.Application.Interfaces.Services;
 
 namespace TelecomSupportSystem.API.Controllers

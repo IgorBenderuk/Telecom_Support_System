@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TelecomSupportSystem.Application.DTOs
+namespace TelecomSupportSystem.Application.DTOs.Auth
 {
     public record RegisterAgentRequest(
     [Required][EmailAddress] string Email,
