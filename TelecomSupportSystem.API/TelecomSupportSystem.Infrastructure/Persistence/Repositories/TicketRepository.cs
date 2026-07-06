@@ -6,27 +6,32 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Repositories
 {
     public class TicketRepository(AppDbContext appDbContext) : ITicketRepository
     {
-        public Task<Ticket?> GetTicketByIdAsync(int id)
+        public Task<Ticket?> GetByIdAsync(int id)
         {
             return appDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public Task<List<Ticket>> GetTicketsAsync()
+        public Task<Ticket?> GetByIdWithMessagesAsync(int id)
+        {
+            return appDbContext.Tickets.Include(t => t.Messages).FirstOrDefaultAsync(t => t.Id == id);
+        }
+
+        public Task<List<Ticket>> GetAllAsync()
         {
             return appDbContext.Tickets.ToListAsync();
         }
 
-        public void AddTicket(Ticket ticket)
+        public void Add(Ticket ticket)
         {
             appDbContext.Tickets.Add(ticket);
         }
 
-        public void UpdateTicket(Ticket ticket)
+        public void Update(Ticket ticket)
         {
             appDbContext.Tickets.Update(ticket);
         }
 
-        public void DeleteTicket(Ticket ticket)
+        public void Delete(Ticket ticket)
         {
             appDbContext.Tickets.Remove(ticket);
         }
