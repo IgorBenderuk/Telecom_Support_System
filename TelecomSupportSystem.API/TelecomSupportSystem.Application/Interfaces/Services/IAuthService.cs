@@ -1,4 +1,4 @@
-﻿using TelecomSupportSystem.Application.DTOs;
+﻿using TelecomSupportSystem.Application.DTOs.Auth;
 using TelecomSupportSystem.Domain.Common;
 
 namespace TelecomSupportSystem.Application.Interfaces.Services

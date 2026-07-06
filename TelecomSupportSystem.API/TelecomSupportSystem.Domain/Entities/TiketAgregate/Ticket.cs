@@ -7,8 +7,8 @@ namespace TelecomSupportSystem.Domain.Entities.TiketAgregate
     public class Ticket
     {
         public int Id { get; set; }
-        public string Title { get; private set; }
-        public string Description { get; private set; }
+        public string? Title { get; private set; }
+        public string? Description { get; private set; }
         //Should be set by ai based on chat history, that what Agent reads to understand customers problem
         public TicketStatus Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
