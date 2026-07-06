@@ -1,29 +1,27 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace TelecomSupportSystem.Domain.Common
+﻿namespace TelecomSupportSystem.Domain.Common
 {
+    using System.Diagnostics.CodeAnalysis;
+
     public class Result
     {
         [MemberNotNullWhen(false, nameof(Error))]
         public bool IsSuccess { get; }
         public string? Error { get; }
+        public ErrorType ErrorType { get; }
 
-        protected Result(bool isSuccess, string? error)
+        protected Result(bool isSuccess, ErrorType errorType, string? error)
         {
             IsSuccess = isSuccess;
             Error = error;
+            ErrorType = errorType;
         }
 
-        protected Result(bool isSuccess, IEnumerable<string> errors)
-        {
-            IsSuccess = isSuccess;
-            Error = string.Join(",", errors);
-        }
+        public static Result Success() => new(true, ErrorType.None, null);
+        public static Result Failure(string error) => new(false, ErrorType.Failure, error);
+        public static Result NotFound(string error) => new(false, ErrorType.NotFound, error);
+        public static Result Forbidden(string error) => new(false, ErrorType.Forbidden, error);
+        public static Result Validation(string error) => new(false, ErrorType.Validation, error);
 
-        public static Result Success() => new(true, error: null);
-        public static Result Failure(string error) => new(false, error);
-
-        public static Result Failure(IEnumerable<string> errors) => new(false, errors);
     }
 
     public class Result<T> : Result
@@ -35,12 +33,32 @@ namespace TelecomSupportSystem.Domain.Common
         [MemberNotNullWhen(false, nameof(Error))]
         public new bool IsSuccess => base.IsSuccess;
 
-        private Result(T value) : base(true, error: null) => Value = value;
-        private Result(string error) : base(false, error) => Value = default;
-        private Result(IEnumerable<string> errors) : base(false, errors) => Value = default;
-        public static Result<T> Success(T value) => new(value);
-        public static new Result<T> Failure(string error) => new(error);
+        protected Result(bool isSuccess, T? value, ErrorType errorType, string? error)
+            : base(isSuccess, errorType, error)
+        {
+            Value = value;
+        }
 
-        public static new Result<T> Failure(IEnumerable<string> errors) => new(errors);
+        public static Result<T> Success(T value) => new(true, value, ErrorType.None, null);
+        public static new Result<T> Failure(string error) => new(false, default, ErrorType.Failure, error);
+        public static new Result<T> NotFound(string error) => new(false, default, ErrorType.NotFound, error);
+        public static new Result<T> Forbidden(string error) => new(false, default, ErrorType.Forbidden, error);
+        public static new Result<T> Validation(string error) => new(false, default, ErrorType.Validation, error);
+
+    }
+
+    public static class StringCollectionExtensions
+    {
+        public static string ConcatErrors(this IEnumerable<string> errors, string separator = ", ")
+            => string.Join(separator, errors);
+    }
+
+    public enum ErrorType
+    {
+        None,
+        Failure,
+        NotFound,
+        Forbidden,
+        Validation
     }
 }
