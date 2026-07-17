@@ -38,13 +38,20 @@
         {
             Value = value;
         }
-
+        internal static Result<T> FromError(ErrorType errorType, string error) => new(false, default, errorType, error);
         public static Result<T> Success(T value) => new(true, value, ErrorType.None, null);
         public static new Result<T> Failure(string error) => new(false, default, ErrorType.Failure, error);
         public static new Result<T> NotFound(string error) => new(false, default, ErrorType.NotFound, error);
         public static new Result<T> Forbidden(string error) => new(false, default, ErrorType.Forbidden, error);
         public static new Result<T> Validation(string error) => new(false, default, ErrorType.Validation, error);
 
+        public Result<TOut> ToFailure<TOut>()
+        {
+            if ( IsSuccess )
+                throw new InvalidOperationException("Cannot convert a successful Result to a failure Result.");
+
+            return Result<TOut>.FromError(ErrorType, Error);
+        }
     }
 
     public static class StringCollectionExtensions
