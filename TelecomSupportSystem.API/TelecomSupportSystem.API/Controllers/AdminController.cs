@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TelecomSupportSystem.Application.DTOs;
+using TelecomSupportSystem.API.Extensions;
+using TelecomSupportSystem.Application.DTOs.Auth;
 using TelecomSupportSystem.Application.Interfaces.Services;
 using TelecomSupportSystem.Domain.Common.Constants;
 
@@ -17,12 +18,7 @@ namespace TelecomSupportSystem.API.Controllers
         public async Task<IActionResult> RegisterAgent(RegisterAgentRequest registerAgentRequest)
         {
             var registerAgentResult = await _authService.RegisterAgent(registerAgentRequest);
-
-            if ( !registerAgentResult.IsSuccess )
-            {
-                return BadRequest(registerAgentResult.Error);
-            }
-            return Ok(registerAgentResult.IsSuccess);
+            return registerAgentResult.ToActionResult();
         }
     }
 }

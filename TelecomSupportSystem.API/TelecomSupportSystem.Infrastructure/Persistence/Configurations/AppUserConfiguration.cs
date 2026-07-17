@@ -25,12 +25,6 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
                 .WithOne(t => t.Customer)
                 .HasForeignKey(t => t.CustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(u => u.AssignedTickets)
-                .WithOne(t => t.Agent)
-                .HasForeignKey(t => t.AgentId)
-                .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

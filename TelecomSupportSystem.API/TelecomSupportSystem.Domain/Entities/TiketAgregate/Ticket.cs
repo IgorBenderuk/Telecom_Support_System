@@ -1,4 +1,5 @@
-﻿using TelecomSupportSystem.Domain.Common.Exeptions;
+﻿using TelecomSupportSystem.Domain.Common.Constants;
+using TelecomSupportSystem.Domain.Common.Exeptions;
 using TelecomSupportSystem.Domain.Entities.TiketAgregate.Enums;
 using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
@@ -7,8 +8,8 @@ namespace TelecomSupportSystem.Domain.Entities.TiketAgregate
     public class Ticket
     {
         public int Id { get; set; }
-        public string Title { get; private set; }
-        public string Description { get; private set; }
+        public string? Title { get; private set; }
+        public string? Description { get; private set; }
         //Should be set by ai based on chat history, that what Agent reads to understand customers problem
         public TicketStatus Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -20,7 +21,7 @@ namespace TelecomSupportSystem.Domain.Entities.TiketAgregate
         public AppUser Customer { get; private set; }
 
         public string? AgentId { get; private set; }
-        public AppUser? Agent { get; private set; }
+        public SupportAgent? Agent { get; private set; }
 
         private readonly List<Message> _messages = [];
         public IReadOnlyCollection<Message> Messages => _messages.AsReadOnly();
@@ -36,6 +37,7 @@ namespace TelecomSupportSystem.Domain.Entities.TiketAgregate
 
             var ticket = new Ticket() { CustomerId = senderId };
             ticket.AddMessage(initialProblemDetails, MessageSenderType.Customer, senderId);
+            ticket.LastChatActivity = DateTime.UtcNow;
             ticket.Status = TicketStatus.Open;
             ticket.CreatedAt = DateTime.UtcNow;
             return ticket;
@@ -71,11 +73,19 @@ namespace TelecomSupportSystem.Domain.Entities.TiketAgregate
             Status = TicketStatus.OnAgentModeration;
         }
 
+        public bool IsAccessibleBy(string userId, string role)
+        {
+            return role switch
+            {
+                Roles.Admin => true,
+                Roles.Agent => AgentId == userId,
+                Roles.Customer => CustomerId == userId,
+                _ => false
+            };
+        }
+
         public void Close()
         {
-            if ( AgentId is null )
-                throw new DomainException("Cannot close ticket without assigned agent");
-
             if ( Status == TicketStatus.Closed )
                 throw new DomainException("Ticket is already closed");
 

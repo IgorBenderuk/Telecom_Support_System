@@ -1,9 +1,9 @@
-﻿using TelecomSupportSystem.Application.DTOs;
+﻿using TelecomSupportSystem.Application.DTOs.Auth;
 using TelecomSupportSystem.Domain.Entities.UserAgregate;
 
 namespace TelecomSupportSystem.Application.Mappings
 {
-    public static class AppUserMapping
+    public static class AppUserMappingExtensions
     {
         public static AppUser ToAppUser(this RegisterCustomerRequest registerRequest)
         {

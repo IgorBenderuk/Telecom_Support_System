@@ -4,10 +4,11 @@ namespace TelecomSupportSystem.Domain.Interfaces.Repositories
 {
     public interface ITicketRepository
     {
-        public Task<Ticket?> GetTicketByIdAsync(int id);
-        public Task<List<Ticket>> GetTicketsAsync();
-        public void AddTicket(Ticket ticket);
-        public void UpdateTicket(Ticket ticket);
-        public void DeleteTicket(Ticket ticket);
+        public Task<Ticket?> GetByIdAsync(int id);
+        public Task<Ticket?> GetByIdWithMessagesAsync(int id);
+        public Task<List<Ticket>> GetAllAsync();
+        public void Add(Ticket ticket);
+        public void Update(Ticket ticket);
+        public void Delete(Ticket ticket);
     }
 }

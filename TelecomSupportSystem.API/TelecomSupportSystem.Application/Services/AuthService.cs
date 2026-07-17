@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using TelecomSupportSystem.Application.DTOs;
+using TelecomSupportSystem.Application.DTOs.Auth;
 using TelecomSupportSystem.Application.Interfaces.Services;
 using TelecomSupportSystem.Application.Mappings;
 using TelecomSupportSystem.Domain.Common;
@@ -20,14 +20,14 @@ namespace TelecomSupportSystem.Application.Services
 
             if ( !createResult.Succeeded )
             {
-                return Result.Failure(string.Join(',', createResult.Errors.Select(err => err.Description)));
+                return Result.Failure(createResult.Errors.Select(err => err.Description).ConcatErrors());
             }
 
             var addRoleResult = await _userManager.AddToRoleAsync(user, Roles.Customer);
 
             if ( !addRoleResult.Succeeded )
             {
-                return Result.Failure(string.Join(',', addRoleResult.Errors.Select(err => err.Description)));
+                return Result.Failure(addRoleResult.Errors.Select(err => err.Description).ConcatErrors());
             }
             return Result.Success();
         }
@@ -39,21 +39,21 @@ namespace TelecomSupportSystem.Application.Services
 
             if ( !createResult.Succeeded )
             {
-                return Result.Failure(string.Join(',', createResult.Errors.Select(err => err.Description)));
+                return Result.Validation(createResult.Errors.Select(err => err.Description).ConcatErrors());
             }
 
             user.InitializeAgentProfile();
             var updateResult = await _userManager.UpdateAsync(user);
             if ( !updateResult.Succeeded )
             {
-                return Result.Failure(string.Join(',', updateResult.Errors.Select(err => err.Description)));
+                return Result.Failure(updateResult.Errors.Select(err => err.Description).ConcatErrors());
             }
 
             var addRoleResult = await _userManager.AddToRoleAsync(user, Roles.Agent);
 
             if ( !addRoleResult.Succeeded )
             {
-                return Result.Failure(string.Join(',', addRoleResult.Errors.Select(err => err.Description)));
+                return Result.Failure(addRoleResult.Errors.Select(err => err.Description).ConcatErrors());
             }
             return Result.Success();
         }
@@ -63,7 +63,7 @@ namespace TelecomSupportSystem.Application.Services
             var user = await _userManager.FindByEmailAsync(loginRequest.Email);
 
             if ( user is null )
-                return Result<string>.Failure($"User with email{loginRequest.Email} was not found.");
+                return Result<string>.NotFound($"User with email{loginRequest.Email} was not found.");
 
             if ( !await _userManager.CheckPasswordAsync(user, loginRequest.Password) )
                 return Result<string>.Failure($"Specified password is not valid.");

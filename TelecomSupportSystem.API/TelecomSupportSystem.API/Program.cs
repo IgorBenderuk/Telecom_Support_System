@@ -21,6 +21,11 @@ builder.Services.AddHostedService<DatabaseInitializer>();
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+});
+
 var app = builder.Build();
 
 

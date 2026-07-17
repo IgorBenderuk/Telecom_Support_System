@@ -10,6 +10,11 @@ namespace TelecomSupportSystem.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(s => s.AppUserId);
 
+            builder.HasMany(u => u.AssignedTickets)
+                .WithOne(t => t.Agent)
+                .HasForeignKey(t => t.AgentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasOne(s => s.AppUser)
                 .WithOne()
                 .HasForeignKey<SupportAgent>(s => s.AppUserId)
