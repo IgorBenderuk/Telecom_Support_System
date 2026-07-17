@@ -5,10 +5,10 @@ namespace TelecomSupportSystem.Application.Mappings
 {
     public static class MessageMappingExtensions
     {
-        public static MessageDto ToDto(this Message message) =>
+        public static MessageDto ToDtoMessageDto(this Message message) =>
             new(message.Id, message.Content, message.SenderType, message.SentAt);
 
-        public static IReadOnlyCollection<MessageDto> ToDtoList(this IEnumerable<Message> messages) =>
-            [.. messages.Select(m => m.ToDto())];
+        public static IReadOnlyCollection<MessageDto> ToMessageDtoList(this IEnumerable<Message> messages) =>
+            [.. messages.Select(m => m.ToDtoMessageDto())];
     }
 }

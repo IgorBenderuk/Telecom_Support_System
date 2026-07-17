@@ -25,17 +25,17 @@ namespace TelecomSupportSystem.Application.Services
             return Result<int>.Success(ticket.Id);
         }
 
-        public async Task<Result<Ticket>> GetTicketByIdAsync(int ticketId, string userId, string role)
+        public async Task<Result<TicketDto>> GetTicketByIdAsync(int ticketId, string userId, string role)
         {
             var result = await GetTicketAsync(ticketId);
 
             if ( !result.IsSuccess )
-                return result;
+                return result.ToFailure<TicketDto>();
 
             if ( !result.Value.IsAccessibleBy(userId, role) )
-                return Result<Ticket>.Forbidden("You are not allowed to access this ticket.");
+                return Result<TicketDto>.Forbidden("You are not allowed to access this ticket.");
 
-            return result;
+            return Result<TicketDto>.Success(result.Value.ToTicketDto());
         }
 
         public async Task<Result<IReadOnlyCollection<MessageDto>>> GetMessagesByTicketIdAsync(int ticketId, string userId, string role)
@@ -48,15 +48,15 @@ namespace TelecomSupportSystem.Application.Services
             if ( !ticket.IsAccessibleBy(userId, role) )
                 return Result<IReadOnlyCollection<MessageDto>>.Forbidden($"You can not access ticket with id:{ticketId}");
 
-            var messagesDtos = ticket.Messages.ToDtoList();
+            var messagesDtos = ticket.Messages.ToMessageDtoList();
 
             return Result<IReadOnlyCollection<MessageDto>>.Success(messagesDtos);
         }
 
-        public async Task<Result<List<Ticket>>> GetAllTicketsAsync()
+        public async Task<Result<List<TicketDto>>> GetAllTicketsAsync()
         {
             var tickets = await unitOfWork.Tickets.GetAllAsync();
-            return Result<List<Ticket>>.Success(tickets);
+            return Result<List<TicketDto>>.Success(tickets.ToTicketDtoList());
         }
         private async Task<Result<Ticket>> GetTicketAsync(int ticketId)
         {
